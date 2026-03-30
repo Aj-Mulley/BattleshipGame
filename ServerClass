@@ -5,12 +5,26 @@ using System.Text;
 
 class Server
 {
+    public static string GetLocalIPAddress()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+        throw new Exception("No network adapters with an IPv4 address in the system!");
+    }
+    
     static void Main()
     {
         int port = 5000;
         TcpListener server = new TcpListener(IPAddress.Any, port);
 
         server.Start();
+        Console.WriteLine("Local IP: " + GetLocalIPAddress());
         Console.WriteLine("Server started. Waiting for connection...");
 
         TcpClient client = server.AcceptTcpClient();
