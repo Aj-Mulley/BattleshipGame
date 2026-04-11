@@ -29,7 +29,7 @@ namespace BattleshipCPU
         protected bool IsHit(int r, int c) =>
             InBounds(r, c) && board[r, c] == CellState.Hit;
 
-        protected bool HasActiveHits()
+        protected bool HasActiveHits() //a cell that has been struck but the ship it belongs to hasnt been fully sunk yet
         {
             for (int r = 0; r < GridSize; r++)
                 for (int c = 0; c < GridSize; c++)
@@ -50,3 +50,4 @@ namespace BattleshipCPU
             return (r, c);
         }
     }
+}
